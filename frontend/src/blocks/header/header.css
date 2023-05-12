@@ -1,0 +1,36 @@
+.header {
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0;
+    width: 880px;
+}
+
+.header::after {
+    content: "";
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 38px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgba(84,84,84,0.7);
+}
+
+@media screen and (max-width: 934px) {
+    .header {
+        width: 100%;
+        padding: 0 50px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .header {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .header::after {
+       height: 28.6px;
+    }
+}

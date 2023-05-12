@@ -1,0 +1,353 @@
+/* Main */
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+
+/* Page */
+@import url(../blocks/page/page.css);
+@import url(../blocks/page/__root/page__root.css);
+@import url(../blocks/page/__content/page__content.css);
+
+/* Header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+/* Profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar-container/profile__avatar-container.css);
+@import url(../blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-info/profile__avatar-info.css);
+@import url(../blocks/profile/__title/profile__title.css);
+@import url(../blocks/profile/__description/profile__description.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
+
+/* Elements */
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__list/elements__list.css);
+
+/* Element */
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__photo/element__photo.css);
+@import url(../blocks/element/__trash-button/element__trash-button.css);
+@import url(../blocks/element/__trash-button/_active/element__trash-button_active.css);
+@import url(../blocks/element/__description/element__description.css);
+@import url(../blocks/element/__title/element__title.css);
+@import url(../blocks/element/__like-button/element__like-button.css);
+@import url(../blocks/element/__like-container/element__like-container.css);
+@import url(../blocks/element/__like-button/_active/element__like-button_active.css);
+@import url(../blocks/element/__like-caption/element__like-caption.css);
+
+/* Footer */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+
+/* Popup */
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_type/popup__input_type_error.css);
+@import url(../blocks/popup/__submit-button/popup__submit-button.css);
+@import url(../blocks/popup/__submit-button/_disabled/popup__submit-button_disabled.css);
+@import url(../blocks/popup/__error/_visible/popup__error_visible.css);
+@import url(../blocks/popup/__error/popup__error.css);
+
+/* Picture Popup */
+@import url(../blocks/picture-popup/picture-popup.css);
+@import url(../blocks/picture-popup/__container/picture-popup__container.css);
+@import url(../blocks/picture-popup/__close-button/picture-popup__close-button.css);
+@import url(../blocks/picture-popup/__figure/picture-popup__figure.css);
+@import url(../blocks/picture-popup/__image/picture-popup__image.css);
+@import url(../blocks/picture-popup/__caption/picture-popup__caption.css);
+
+/* Deletion-confirm Popup */
+@import url(../blocks/deletion-confirm-popup/__form/deletion-confirm-popup__form.css);
+@import url(../blocks/deletion-confirm-popup/__submit-button/deletion-confirm-popup__submit-button.css);
+
+
+.auth {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+    width: 880px;
+}
+
+@media screen and (max-width: 934px) {
+    .auth {
+        width: 100%;
+        padding: 0 50px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .auth {
+        padding: 0 30px;
+    }
+}
+
+.auth__container {
+    width: 358px;
+    padding-top: 60px;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__container {
+        padding-top: 40px;
+    }
+}
+
+.auth__container_type_login {
+    padding-bottom: 112px;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__container_type_login {
+        padding-bottom: 77px;
+    }
+}
+
+.auth__container_type_register {
+    padding-bottom: 80px;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__container_type_register {
+        padding-bottom: 40px;
+    }
+}
+
+.auth__title {
+    margin: 0 0 50px;
+    padding: 0;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__title {
+        margin: 0 0 40px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+.auth__form {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth__input {
+    color: #FFF;
+    margin: 0 0 30px;
+    padding: 0 0 11px;
+    border: none;
+    border-bottom: 2px solid #CCC;
+    background-color: transparent;
+    width: 100%;
+    height: 27px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.auth__input::placeholder {
+    color: #CCC;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.auth__input:last-of-type {
+    margin: 0 0 216px;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__input:last-of-type {
+        margin: 0 0 173px;
+    }
+}
+
+.auth__button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #FFF;
+    color: #000;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth__button:hover {
+    opacity: 0.85;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__button {
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+
+.auth__link-container {
+    text-decoration: none;
+}
+
+.auth__link {
+    margin: 15px auto 0;
+    color: #FFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth__link:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 568px) {
+    .auth__link {
+        margin: 20px auto 0;
+    }
+}
+
+.info-tooltip-popup__container {
+    padding: 60px 36px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 568px) {
+    .info-tooltip-popup__container {
+        padding: 50px 18px;
+    }
+}
+
+.info-tooltip-popup__image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 32px;
+}
+
+@media screen and (max-width: 568px) {
+    .info-tooltip-popup__image {
+        margin-bottom: 40px;
+    }
+}
+
+.info-tooltip-popup__title {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+}
+
+@media screen and (max-width: 568px) {
+    .info-tooltip-popup__title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+.header__link {
+    margin: 6px 0 0 auto;
+    color: #FFF;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: right;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.header__link:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 760px) {
+    .header__link {
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .header__link {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+
+.header__container {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.header__info {
+    display: flex;
+    gap: 24px
+}
+
+@media screen and (max-width: 760px) {
+    .header__info {
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .header__info {
+        flex-direction: column;
+        gap: 18px
+    }
+}
+
+.header__email {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: right;
+}
+
+.header__exit {
+    text-decoration: none;
+    color: #A9A9A9;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: right;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.header__exit:hover {
+    opacity: 0.6;
+}
