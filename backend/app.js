@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const { validateLogin, validateCreateUser } = require('./middlewares/validation');
 const { createUser, login } = require('./controllers/users');
@@ -20,6 +21,9 @@ app.use(express.json());
 // Подключаемся к серверу mongo
 mongoose.connect(MONGO_URL);
 
+// Подключаем логгер запросов
+app.use(requestLogger);
+
 // Подключаем роуты
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
@@ -31,6 +35,9 @@ app.use(cardRouter);
 app.use('*', (req, res, next) => {
   next(new NotFound('Такой страницы не существует'));
 });
+
+// Подключаем логгер ошибок
+app.use(errorLogger);
 
 // Обрабатываем ошибки
 app.use(errors()); // обработчик ошибок celebrate
