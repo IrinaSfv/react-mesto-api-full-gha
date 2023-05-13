@@ -10,7 +10,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.17.80
+IP 158.160.17.80
 
 Frontend https://mesto.irinasfv.nomoredomains.monster
 

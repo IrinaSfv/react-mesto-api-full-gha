@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const AuthErr = require('../errors/authError');
 const { SECRET_KEY } = require('../config/config');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   // достаём авторизационный заголовок
@@ -19,7 +21,7 @@ module.exports = (req, res, next) => {
 
   try {
     // попытаемся верифицировать токен
-    payload = jwt.verify(token, SECRET_KEY);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : SECRET_KEY);
   } catch (e) {
     // отправим ошибку, если не получилось
     return next(new AuthErr('Необходима авторизация'));

@@ -14,6 +14,8 @@ const {
   SECRET_KEY,
 } = require('../config/config');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUsers = (req, res, next) => {
   User.find()
     .then((users) => {
@@ -45,7 +47,11 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       // создадим токен
-      const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : SECRET_KEY,
+        { expiresIn: '7d' },
+      );
       // аутентификация успешна
       res.status(OK_STATUS).send({ token });
     })
