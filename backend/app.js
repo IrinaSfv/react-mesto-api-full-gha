@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const { validateLogin, validateCreateUser } = require('./middlewares/validation');
 const { createUser, login } = require('./controllers/users');
@@ -23,6 +24,9 @@ mongoose.connect(MONGO_URL);
 
 // Подключаем логгер запросов
 app.use(requestLogger);
+
+// Подключаем cors
+app.use(cors);
 
 // Подключаем роуты
 app.post('/signin', validateLogin, login);
