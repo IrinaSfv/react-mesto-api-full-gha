@@ -8,16 +8,14 @@ const allowedCors = [
   'http://localhost:3000',
 ];
 
-// Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
-const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-
 module.exports = (req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
   // сохраняем список заголовков исходного запроса
   const requestHeaders = req.headers['access-control-request-headers'];
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-  res.header('Access-Control-Allow-Credentials', true);
+  // res.header('Access-Control-Allow-Credentials', true);
 
   // проверяем, что источник запроса есть среди разрешённых
   if (allowedCors.includes(origin)) {
