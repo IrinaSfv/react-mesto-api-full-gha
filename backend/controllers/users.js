@@ -9,7 +9,7 @@ const BadRequest = require('../errors/badRequest');
 const ConflictError = require('../errors/conflict');
 const {
   OK_STATUS,
-  OK_CREATED_STATUS,
+  // OK_CREATED_STATUS,
   SALT_ROUND,
   SECRET_KEY,
 } = require('../config/config');
@@ -86,7 +86,7 @@ const createUser = (req, res, next) => {
     }))
     .then((newUser) => {
       console.log(newUser);
-      res.status(OK_CREATED_STATUS).send({
+      res.status(OK_STATUS).send({
         data: {
           name: newUser.name,
           about: newUser.about,
