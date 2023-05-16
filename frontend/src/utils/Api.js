@@ -4,6 +4,10 @@ class Api {
       this._headers = options.headers;
     }
 
+    getToken(token) {
+        this._headers.authorization = `Bearer ${token}`;
+    }
+
     //Проверка ответа от сервера
     checkResponse(res) {
         if (res.ok) {
@@ -100,6 +104,7 @@ class Api {
 const api = new Api({
     url: 'https://api.mesto.irinasfv.nomoredomains.monster',
     headers: {
+        'Authorization' : `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
     },
 });
