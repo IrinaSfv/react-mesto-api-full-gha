@@ -57,6 +57,7 @@ app.use(errorLogger);
 app.use(errors()); // обработчик ошибок celebrate
 
 app.use((err, req, res, next) => { // централизованный обработчик
+  console.log(err);
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = INTERNAL_SERVER_STATUS, message } = err;
   res

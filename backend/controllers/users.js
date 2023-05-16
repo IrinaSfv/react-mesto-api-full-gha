@@ -67,6 +67,15 @@ const createUser = (req, res, next) => {
     password,
   } = req.body;
 
+  console.log(req.body);
+  console.log({
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  });
+
   bcrypt.hash(password, SALT_ROUND)
     .then((hash) => User.create({
       name,
@@ -76,6 +85,7 @@ const createUser = (req, res, next) => {
       password: hash,
     }))
     .then((newUser) => {
+      console.log(newUser);
       res.status(OK_CREATED_STATUS).send({
         data: {
           name: newUser.name,
@@ -95,6 +105,7 @@ const createUser = (req, res, next) => {
 
         next(new BadRequest(message));
       } else {
+        console.log(e);
         next(e);
       }
     });
