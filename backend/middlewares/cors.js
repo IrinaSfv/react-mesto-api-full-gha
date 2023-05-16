@@ -15,8 +15,6 @@ module.exports = (req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-  // res.header('Access-Control-Allow-Credentials', true);
-
   // проверяем, что источник запроса есть среди разрешённых
   if (allowedCors.includes(origin)) {
     // устанавливаем заголовок, который разрешает браузеру запросы с этого источника

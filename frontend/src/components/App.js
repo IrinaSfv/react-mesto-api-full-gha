@@ -97,6 +97,7 @@ function App() {
     auth.loginUser(email, password)
       .then((data) => {
         if (data.token) {
+          api.getToken(data.token);
           setUserEmail(email);
           setLoggedIn(true);
           navigate('/', { replace: true });

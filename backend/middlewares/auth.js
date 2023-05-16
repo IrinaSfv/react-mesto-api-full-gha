@@ -8,6 +8,7 @@ const { SECRET_KEY } = require('../config/config');
 module.exports = (req, res, next) => {
   // достаём авторизационный заголовок
   const { authorization } = req.headers;
+  console.log(req.headers);
 
   // убеждаемся, что он есть или начинается с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
@@ -16,6 +17,7 @@ module.exports = (req, res, next) => {
 
   // извлечём токен
   const token = authorization.replace('Bearer ', '');
+  console.log(token);
   let payload;
 
   try {
