@@ -19,7 +19,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const getUsers = (req, res, next) => {
   User.find()
     .then((users) => {
-      res.status(OK_STATUS).send({ data: users });
+      res.status(OK_STATUS).send(users);
     })
     .catch(next);
 };
@@ -31,7 +31,7 @@ const getUser = (req, res, next) => {
       throw new NotFound('Пользователь с таким id не найден');
     })
     .then((user) => {
-      res.status(OK_STATUS).send({ data: user });
+      res.status(OK_STATUS).send(user);
     })
     .catch((e) => {
       if (e instanceof mongoose.Error.CastError) {
@@ -107,7 +107,7 @@ const getCurrentUserInfo = (req, res, next) => {
       throw new NotFound('Пользователь с таким id не найден');
     })
     .then((user) => {
-      res.status(OK_STATUS).send({ data: user });
+      res.status(OK_STATUS).send(user);
     })
     .catch(next);
 };
@@ -125,7 +125,7 @@ const updateUser = (req, res, next, newData) => {
     throw new NotFound('Пользователь с таким id не найден');
   })
     .then((user) => {
-      res.status(OK_STATUS).send({ data: user });
+      res.status(OK_STATUS).send(user);
     })
     .catch(next);
 };

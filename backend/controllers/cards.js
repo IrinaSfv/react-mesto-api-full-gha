@@ -18,7 +18,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => {
-      res.status(OK_CREATED_STATUS).send({ data: card });
+      res.status(OK_CREATED_STATUS).send(card);
     })
     .catch((e) => {
       if (e instanceof mongoose.Error.ValidationError) {
@@ -47,7 +47,7 @@ const deleteCard = (req, res, next) => {
       } else {
         Card.deleteOne(card)
           .then(() => {
-            res.status(OK_STATUS).send({ data: card });
+            res.status(OK_STATUS).send({ data: card }); // .send({ message: 'Карточка удалена' });
           })
           .catch(next);
       }
@@ -72,7 +72,7 @@ const updateCardLike = (req, res, next, newData) => {
     })
     .populate(['owner', 'likes'])
     .then((card) => {
-      res.status(OK_STATUS).send({ data: card });
+      res.status(OK_STATUS).send(card);
     })
     .catch((e) => {
       if (e instanceof mongoose.Error.CastError) {
