@@ -18,19 +18,25 @@ class Api {
     }
 
     // 1. Загрузка информации о пользователе
-    getUserData() {
+    getUserData(token) {
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
-            headers: this._headers
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
         .then(this.checkResponse);
     }
 
     // 2. Загрузка карточек
-    getInitialCards() {
+    getInitialCards(token) {
         return fetch(`${this._url}/cards`, {
             method: 'GET',
-            headers: this._headers
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
         .then(this.checkResponse);
     }
@@ -104,7 +110,7 @@ class Api {
 const api = new Api({
     url: 'https://api.mesto.irinasfv.nomoredomains.monster',
     headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
     },
 });

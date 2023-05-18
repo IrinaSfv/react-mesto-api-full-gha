@@ -60,7 +60,8 @@ function App() {
   // загрузка карточек и профиля пользователя
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getUserData(), api.getInitialCards()])
+      const token = localStorage.getItem('token');
+      Promise.all([api.getUserData(token), api.getInitialCards(token)])
         .then(([resUser, resCards]) => {
           setCurrentUser(resUser);
           setCards(resCards);
