@@ -119,11 +119,14 @@ function App() {
   // проверка токена
   function checkToken() {
     const token = localStorage.getItem('token');
+    console.log(token);
     if (token) {
       auth.getContent(token).then((res) => {
         console.log(res);
         if (res) {
-          setUserEmail(res.data.email);
+          console.log(res.data.email);
+          console.log(res.email);
+          setUserEmail(res.email);
           setLoggedIn(true);
           // setCurrentToken(token);
           navigate("/", { replace: true })
@@ -257,6 +260,7 @@ function App() {
     const pictureSrc = cardData.pictureSrc;
     api.addNewCard(place, pictureSrc, token)
       .then((newCard) => { //получаем объект новой карточки
+        console.log(newCard);
         setCards([newCard, ...cards]);
         closeAllPopups();
         console.log(`Карточка добавлена.`)

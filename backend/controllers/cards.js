@@ -7,7 +7,7 @@ const { OK_STATUS, OK_CREATED_STATUS } = require('../config/config');
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((cards) => {
       res.status(OK_STATUS).send(cards);
     })
@@ -40,7 +40,7 @@ const deleteCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFound('Карточка не найдена');
     })
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((card) => {
       if (!card.owner.equals(ownerId)) {
         throw new NotOwner('Невозможно удалить чужую карточку');
@@ -70,7 +70,7 @@ const updateCardLike = (req, res, next, newData) => {
     .orFail(() => {
       throw new NotFound('Карточка не найдена');
     })
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((card) => {
       res.status(OK_STATUS).send(card);
     })

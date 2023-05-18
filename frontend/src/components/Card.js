@@ -20,6 +20,8 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         `element__like-button ${isLiked && 'element__like-button_active'}`
     );
 
+    console.log(card);
+
     function handleClick() {
         onCardClick(card);
     }
@@ -36,7 +38,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         <li className="elements__card">
             <article className="element" id={card._id}>
                 <img className="element__photo" src={card.link} alt={card.name} onClick={handleClick} />
-                {isOwn && <button onClick={handleDeleteClick} className="element__trash-button_active" type="button" aria-label="Кнопка для удаления карточки места"></button>}
+                {isOwn && (<button onClick={handleDeleteClick} className="element__trash-button_active" type="button" aria-label="Кнопка для удаления карточки места"></button>)}
                 <div className="element__description">
                     <h2 className="element__title">{card.name}</h2>
                     <div className="element__like-container">
