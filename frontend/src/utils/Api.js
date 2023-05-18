@@ -4,10 +4,6 @@ class Api {
       this._headers = options.headers;
     }
 
-    getToken(token) {
-        this._headers.authorization = `Bearer ${token}`;
-    }
-
     //Проверка ответа от сервера
     checkResponse(res) {
         if (res.ok) {
@@ -42,10 +38,13 @@ class Api {
     }
   
     // 3. Редактирование профиля
-    editProfile(userName, userAbout) {
+    editProfile(userName, userAbout, token) {
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 name: userName,
                 about: userAbout,
@@ -55,10 +54,13 @@ class Api {
     } 
 
     // 4. Добавление новой карточки
-    addNewCard(newName, newUrl) {
+    addNewCard(newName, newUrl, token) {
         return fetch(`${this._url}/cards`, {
             method: 'POST',
-            headers: this._headers,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 name: newName,
                 link: newUrl,
@@ -68,37 +70,49 @@ class Api {
     }
 
     // 5. Удаление карточки
-    deleteCard(cardId) {
+    deleteCard(cardId, token) {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
         .then(this.checkResponse);
     }
 
     // 6. Постановка лайка
-    setLike(cardId) {
+    setLike(cardId, token) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: this._headers
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
         .then(this.checkResponse);
     }
 
     // 7. Снятие лайка
-    removeLike(cardId) {
+    removeLike(cardId, token) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
         })
         .then(this.checkResponse);
     }
 
     // 8. Обновление аватара пользователя
-    changeAvatar(avatarSrc) {
+    changeAvatar(avatarSrc, token) {
         return fetch(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 avatar: avatarSrc,
             })
@@ -109,10 +123,6 @@ class Api {
 
 const api = new Api({
     url: 'https://api.mesto.irinasfv.nomoredomains.monster',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-    },
 });
 
 export default api;

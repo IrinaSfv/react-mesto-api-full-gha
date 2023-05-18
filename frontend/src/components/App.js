@@ -24,10 +24,6 @@ function App() {
   const navigate = useNavigate();
   // состояние авторизации пользователя
   const [loggedIn, setLoggedIn] = useState(false);
-  // состояние успешности регистрации
-  const [isSuccessReg, setIsSuccessReg] = useState(false);
-  // состояние успешности входа
-  const [isSuccessLogin, setIsSuccessLogin] = useState(false);
   // email для отображения в хедере
   const [userEmail, setUserEmail] = useState("");
   // состояние отображения попапов
@@ -51,6 +47,8 @@ function App() {
   // текст и картинка для отображения в инфо-попапе при входе и регистрации
   const [infoTitle, setInfoTitle] = useState("");
   const [infoImg, setInfoImg] = useState(null);
+  // токен текущего пользователя
+  const [currentToken, setCurrentToken] = useState(null);
 
   // проверка токена каждый раз, когда пользователь открывает страницу
   useEffect(() => {
@@ -77,7 +75,6 @@ function App() {
     auth.registerUser(email, password)
       .then((res) => {
         if (res) {
-          // setIsSuccessReg(true);
           setInfoTitle("Вы успешно зарегестрировались!");
           setInfoImg(SuccessImgSrc);
           navigate('/sign-in', { replace: true });
@@ -86,7 +83,6 @@ function App() {
       .catch(() => {
         setInfoTitle("Что-то пошло не так! Попробуйте ещё раз.");
         setInfoImg(FailImgSrc);
-        // setIsSuccessReg(false);
       })
       .finally(() => {
         setIsInfoPopupOpen(true);
@@ -116,6 +112,7 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     localStorage.removeItem('token');
+    setCurrentToken(null);
     navigate('/sign-in', { replace: true });
   }
 
@@ -127,6 +124,7 @@ function App() {
         if (res) {
           setUserEmail(res.data.email);
           setLoggedIn(true);
+          setCurrentToken(token);
           navigate("/", { replace: true })
         }
       })
@@ -173,10 +171,9 @@ function App() {
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
     // Отправляем запрос в API
     if (isLiked) { //если лайк на карточке уже есть
-      api.removeLike(card._id)
+      api.removeLike(card._id, currentToken)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -186,7 +183,7 @@ function App() {
           console.log(`Ошибка при удалении лайка.`)
         });
     } else { //если лайка на карточке нет
-      api.setLike(card._id)
+      api.setLike(card._id, currentToken)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -200,7 +197,7 @@ function App() {
 
   // удаление карточки
   function handleCardDelete() {
-    api.deleteCard(deletedCard._id)
+    api.deleteCard(deletedCard._id, currentToken)
       .then(() => {
         setCards((state) =>
           state.filter((c) => c !== deletedCard)
@@ -218,7 +215,7 @@ function App() {
     setEditSubmitTitle("Сохраняем...");
     const name = userData.name;
     const about = userData.about;
-    api.editProfile(name, about)
+    api.editProfile(name, about, currentToken)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -234,7 +231,7 @@ function App() {
   // обновление аватара
   function handleUpdateAvatar(avatarData) {
     setAvatarSubmitTitle("Обновляем...");
-    api.changeAvatar(avatarData.avatar)
+    api.changeAvatar(avatarData.avatar, currentToken)
       .then((res) => { //получаем новый объект пользователя 
         setCurrentUser(res);
         closeAllPopups();
@@ -252,7 +249,7 @@ function App() {
     setAddSubmitTitle("Добавляем...");
     const place = cardData.place;
     const pictureSrc = cardData.pictureSrc;
-    api.addNewCard(place, pictureSrc)
+    api.addNewCard(place, pictureSrc, currentToken)
       .then((newCard) => { //получаем объект новой карточки
         setCards([newCard, ...cards]);
         closeAllPopups();
