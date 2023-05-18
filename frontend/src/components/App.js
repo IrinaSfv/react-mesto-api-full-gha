@@ -48,7 +48,7 @@ function App() {
   const [infoTitle, setInfoTitle] = useState("");
   const [infoImg, setInfoImg] = useState(null);
   // токен текущего пользователя
-  const [currentToken, setCurrentToken] = useState(null);
+  // const [currentToken, setCurrentToken] = useState(null);
 
   // проверка токена каждый раз, когда пользователь открывает страницу
   useEffect(() => {
@@ -112,7 +112,7 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     localStorage.removeItem('token');
-    setCurrentToken(null);
+    // setCurrentToken(null);
     navigate('/sign-in', { replace: true });
   }
 
@@ -124,7 +124,7 @@ function App() {
         if (res) {
           setUserEmail(res.data.email);
           setLoggedIn(true);
-          setCurrentToken(token);
+          // setCurrentToken(token);
           navigate("/", { replace: true })
         }
       })
@@ -171,9 +171,10 @@ function App() {
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const token = localStorage.getItem('token');
     // Отправляем запрос в API
     if (isLiked) { //если лайк на карточке уже есть
-      api.removeLike(card._id, currentToken)
+      api.removeLike(card._id, token)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -183,7 +184,7 @@ function App() {
           console.log(`Ошибка при удалении лайка.`)
         });
     } else { //если лайка на карточке нет
-      api.setLike(card._id, currentToken)
+      api.setLike(card._id, token)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -197,7 +198,8 @@ function App() {
 
   // удаление карточки
   function handleCardDelete() {
-    api.deleteCard(deletedCard._id, currentToken)
+    const token = localStorage.getItem('token');
+    api.deleteCard(deletedCard._id, token)
       .then(() => {
         setCards((state) =>
           state.filter((c) => c !== deletedCard)
@@ -213,9 +215,10 @@ function App() {
   // обновление информации в профиле пользователя
   function handleUpdateUser(userData) {
     setEditSubmitTitle("Сохраняем...");
+    const token = localStorage.getItem('token');
     const name = userData.name;
     const about = userData.about;
-    api.editProfile(name, about, currentToken)
+    api.editProfile(name, about, token)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -231,7 +234,8 @@ function App() {
   // обновление аватара
   function handleUpdateAvatar(avatarData) {
     setAvatarSubmitTitle("Обновляем...");
-    api.changeAvatar(avatarData.avatar, currentToken)
+    const token = localStorage.getItem('token');
+    api.changeAvatar(avatarData.avatar, token)
       .then((res) => { //получаем новый объект пользователя 
         setCurrentUser(res);
         closeAllPopups();
@@ -247,9 +251,10 @@ function App() {
   // добавление новой карточки
   function handleAddPlaceSubmit(cardData) {
     setAddSubmitTitle("Добавляем...");
+    const token = localStorage.getItem('token');
     const place = cardData.place;
     const pictureSrc = cardData.pictureSrc;
-    api.addNewCard(place, pictureSrc, currentToken)
+    api.addNewCard(place, pictureSrc, token)
       .then((newCard) => { //получаем объект новой карточки
         setCards([newCard, ...cards]);
         closeAllPopups();
