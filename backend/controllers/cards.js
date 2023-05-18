@@ -9,7 +9,7 @@ const getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
     .then((cards) => {
-      res.status(OK_STATUS).send({ data: cards });
+      res.status(OK_STATUS).send(cards);
     })
     .catch(next);
 };
