@@ -100,7 +100,7 @@ function App() {
         if (data.token) {
           setUserEmail(email);
           setLoggedIn(true);
-          localStorage.setItem('token', data.token);
+          // localStorage.setItem('token', data.token);
           navigate('/', { replace: true });
         }
       })
