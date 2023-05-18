@@ -123,14 +123,14 @@ function App() {
     if (token) {
       auth.getContent(token).then((res) => {
         console.log(res);
-        // if (res) {
-          console.log(res.data.email);
-          console.log(res.email);
-          setUserEmail(res.email);
+        if (res) {
           setLoggedIn(true);
+          console.log(res.email);
+          // console.log(res.data.email);
+          setUserEmail(res.email);
           // setCurrentToken(token);
-          navigate("/", { replace: true })
-        // }
+          // navigate("/", { replace: true })
+        }
       })
         .catch(() => {
           console.log(`Ошибка при проверке токена`);

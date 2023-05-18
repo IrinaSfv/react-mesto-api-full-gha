@@ -40,7 +40,7 @@ const deleteCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFound('Карточка не найдена');
     })
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((card) => {
       if (!card.owner.equals(ownerId)) {
         throw new NotOwner('Невозможно удалить чужую карточку');
