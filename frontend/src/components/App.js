@@ -62,7 +62,7 @@ function App() {
       Promise.all([api.getUserData(token), api.getInitialCards(token)])
         .then(([resUser, resCards]) => {
           setCurrentUser(resUser);
-          setCards(resCards);
+          setCards(resCards.reverse());
         })
         .catch(() => {
           console.log(`Ошибка при загрузке данных пользователя и карточек.`);

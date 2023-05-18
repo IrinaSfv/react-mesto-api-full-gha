@@ -9,9 +9,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwn = card.owner._id === currentUser._id;
     // Создаём переменную, которую зададим в `className` для кнопки удаления карточки
-    const cardDeleteButtonClassName = (
-        `element__trash-button ${isOwn && 'element__trash-button_active'}`
-    );
+    // const cardDeleteButtonClassName = (
+    //     `element__trash-button ${isOwn && 'element__trash-button_active'}`
+    // );
 
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -36,7 +36,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         <li className="elements__card">
             <article className="element" id={card._id}>
                 <img className="element__photo" src={card.link} alt={card.name} onClick={handleClick} />
-                <button onClick={handleDeleteClick} className={cardDeleteButtonClassName} type="button" aria-label="Кнопка для удаления карточки места"></button>
+                {isOwn && <button onClick={handleDeleteClick} className="element__trash-button_active" type="button" aria-label="Кнопка для удаления карточки места"></button>}
                 <div className="element__description">
                     <h2 className="element__title">{card.name}</h2>
                     <div className="element__like-container">
