@@ -110,7 +110,7 @@ class Api {
 const api = new Api({
     url: 'https://api.mesto.irinasfv.nomoredomains.monster',
     headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
     },
 });
