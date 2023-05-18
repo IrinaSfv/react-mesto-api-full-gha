@@ -125,11 +125,13 @@ function App() {
         console.log(res);
         if (res) {
           setLoggedIn(true);
+          console.log("что-то ломается");
           console.log(res.email);
-          // console.log(res.data.email);
+          console.log("что-то ломается");
           setUserEmail(res.email);
           // setCurrentToken(token);
-          // navigate("/", { replace: true })
+          console.log("что-то ломается");
+          navigate("/", { replace: true })
         }
       })
         .catch(() => {

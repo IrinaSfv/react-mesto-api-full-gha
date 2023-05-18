@@ -7,7 +7,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const currentUser = useContext(CurrentUserContext);
 
     // Определяем, являемся ли мы владельцем текущей карточки
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwn = (card.owner._id || card.owner) === currentUser._id;
     // Создаём переменную, которую зададим в `className` для кнопки удаления карточки
     // const cardDeleteButtonClassName = (
     //     `element__trash-button ${isOwn && 'element__trash-button_active'}`
@@ -36,7 +36,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         <li className="elements__card">
             <article className="element" id={card._id}>
                 <img className="element__photo" src={card.link} alt={card.name} onClick={handleClick} />
-                {isOwn && (<button onClick={handleDeleteClick} className="element__trash-button element__trash-button_active" type="button" aria-label="Кнопка для удаления карточки места"></button>)}
+                {isOwn && (
+                    <button onClick={handleDeleteClick} className="element__trash-button element__trash-button_active" type="button" aria-label="Кнопка для удаления карточки места"></button>
+                )}
                 <div className="element__description">
                     <h2 className="element__title">{card.name}</h2>
                     <div className="element__like-container">
