@@ -116,12 +116,10 @@ function App() {
 
   // проверка токена
   function checkToken() {
-    // const token = localStorage.getItem('token');
     if (currentToken) {
       auth.getContent(currentToken).then((res) => {
         if (res) {
           setLoggedIn(true);
-          // setCurrentToken(token);
           setUserEmail(res.email);
           navigate("/", { replace: true });
         }
@@ -169,7 +167,6 @@ function App() {
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    // const token = localStorage.getItem('token');
     // Отправляем запрос в API
     if (isLiked) { //если лайк на карточке уже есть
       api.removeLike(card._id, currentToken)
@@ -196,7 +193,6 @@ function App() {
 
   // удаление карточки
   function handleCardDelete() {
-    // const token = localStorage.getItem('token');
     api.deleteCard(deletedCard._id, currentToken)
       .then(() => {
         setCards((state) =>
@@ -213,7 +209,6 @@ function App() {
   // обновление информации в профиле пользователя
   function handleUpdateUser(userData) {
     setEditSubmitTitle("Сохраняем...");
-    // const token = localStorage.getItem('token');
     const name = userData.name;
     const about = userData.about;
     api.editProfile(name, about, currentToken)
@@ -232,7 +227,6 @@ function App() {
   // обновление аватара
   function handleUpdateAvatar(avatarData) {
     setAvatarSubmitTitle("Обновляем...");
-    // const token = localStorage.getItem('token');
     api.changeAvatar(avatarData.avatar, currentToken)
       .then((res) => { //получаем новый объект пользователя 
         setCurrentUser(res);
@@ -249,12 +243,10 @@ function App() {
   // добавление новой карточки
   function handleAddPlaceSubmit(cardData) {
     setAddSubmitTitle("Добавляем...");
-    // const token = localStorage.getItem('token');
     const place = cardData.place;
     const pictureSrc = cardData.pictureSrc;
     api.addNewCard(place, pictureSrc, currentToken)
       .then((newCard) => { //получаем объект новой карточки
-        console.log(newCard);
         setCards([newCard, ...cards]);
         closeAllPopups();
         console.log(`Карточка добавлена.`)
