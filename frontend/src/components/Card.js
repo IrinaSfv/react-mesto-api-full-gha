@@ -8,10 +8,6 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwn = (card.owner._id || card.owner) === currentUser._id;
-    // Создаём переменную, которую зададим в `className` для кнопки удаления карточки
-    // const cardDeleteButtonClassName = (
-    //     `element__trash-button ${isOwn && 'element__trash-button_active'}`
-    // );
 
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
     const isLiked = card.likes.some(i => i._id === currentUser._id);

@@ -6,9 +6,6 @@ import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) {
-    // const [userName, setUserName] = useState("Жак-Ив Кусто");
-    // const [userDescription, setUserDescription] = useState("Исследователь океана");
-    // const [userAvatar, setUserAvatar] = useState({ profileAvatar });
 
     //Подписываемся на контекст текущего пользователя
     const currentUser = useContext(CurrentUserContext);

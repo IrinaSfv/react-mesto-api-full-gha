@@ -48,7 +48,7 @@ function App() {
   const [infoTitle, setInfoTitle] = useState("");
   const [infoImg, setInfoImg] = useState(null);
   // токен текущего пользователя
-  // const [currentToken, setCurrentToken] = useState(null);
+  const [currentToken, setCurrentToken] = useState(localStorage.getItem('token'));
 
   // проверка токена каждый раз, когда пользователь открывает страницу
   useEffect(() => {
@@ -57,9 +57,8 @@ function App() {
 
   // загрузка карточек и профиля пользователя
   useEffect(() => {
-    if (loggedIn) {
-      const token = localStorage.getItem('token');
-      Promise.all([api.getUserData(token), api.getInitialCards(token)])
+    if (loggedIn && currentToken) {
+      Promise.all([api.getUserData(currentToken), api.getInitialCards(currentToken)])
         .then(([resUser, resCards]) => {
           setCurrentUser(resUser);
           setCards(resCards.reverse());
@@ -68,7 +67,7 @@ function App() {
           console.log(`Ошибка при загрузке данных пользователя и карточек.`);
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, currentToken]);
 
   // регистрация пользователя в системе
   function handleRegistration(email, password) {
@@ -96,7 +95,6 @@ function App() {
         if (data.token) {
           setUserEmail(email);
           setLoggedIn(true);
-          // localStorage.setItem('token', data.token);
           navigate('/', { replace: true });
         }
       })
@@ -112,26 +110,20 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     localStorage.removeItem('token');
-    // setCurrentToken(null);
+    setCurrentToken('');
     navigate('/sign-in', { replace: true });
   }
 
   // проверка токена
   function checkToken() {
-    const token = localStorage.getItem('token');
-    console.log(token);
-    if (token) {
-      auth.getContent(token).then((res) => {
-        console.log(res);
+    // const token = localStorage.getItem('token');
+    if (currentToken) {
+      auth.getContent(currentToken).then((res) => {
         if (res) {
           setLoggedIn(true);
-          console.log("что-то ломается");
-          console.log(res.email);
-          console.log("что-то ломается");
-          setUserEmail(res.email);
           // setCurrentToken(token);
-          console.log("что-то ломается");
-          navigate("/", { replace: true })
+          setUserEmail(res.email);
+          navigate("/", { replace: true });
         }
       })
         .catch(() => {
@@ -177,10 +169,10 @@ function App() {
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     // Отправляем запрос в API
     if (isLiked) { //если лайк на карточке уже есть
-      api.removeLike(card._id, token)
+      api.removeLike(card._id, currentToken)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -190,7 +182,7 @@ function App() {
           console.log(`Ошибка при удалении лайка.`)
         });
     } else { //если лайка на карточке нет
-      api.setLike(card._id, token)
+      api.setLike(card._id, currentToken)
         .then((res) => { //получаем обновленный объект карточки
           setCards((state) =>
             state.map((c) => c._id === card._id ? res : c)
@@ -204,8 +196,8 @@ function App() {
 
   // удаление карточки
   function handleCardDelete() {
-    const token = localStorage.getItem('token');
-    api.deleteCard(deletedCard._id, token)
+    // const token = localStorage.getItem('token');
+    api.deleteCard(deletedCard._id, currentToken)
       .then(() => {
         setCards((state) =>
           state.filter((c) => c !== deletedCard)
@@ -221,10 +213,10 @@ function App() {
   // обновление информации в профиле пользователя
   function handleUpdateUser(userData) {
     setEditSubmitTitle("Сохраняем...");
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     const name = userData.name;
     const about = userData.about;
-    api.editProfile(name, about, token)
+    api.editProfile(name, about, currentToken)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -240,8 +232,8 @@ function App() {
   // обновление аватара
   function handleUpdateAvatar(avatarData) {
     setAvatarSubmitTitle("Обновляем...");
-    const token = localStorage.getItem('token');
-    api.changeAvatar(avatarData.avatar, token)
+    // const token = localStorage.getItem('token');
+    api.changeAvatar(avatarData.avatar, currentToken)
       .then((res) => { //получаем новый объект пользователя 
         setCurrentUser(res);
         closeAllPopups();
@@ -257,10 +249,10 @@ function App() {
   // добавление новой карточки
   function handleAddPlaceSubmit(cardData) {
     setAddSubmitTitle("Добавляем...");
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     const place = cardData.place;
     const pictureSrc = cardData.pictureSrc;
-    api.addNewCard(place, pictureSrc, token)
+    api.addNewCard(place, pictureSrc, currentToken)
       .then((newCard) => { //получаем объект новой карточки
         console.log(newCard);
         setCards([newCard, ...cards]);
